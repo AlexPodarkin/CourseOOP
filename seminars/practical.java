@@ -2,7 +2,7 @@ package seminars;
 
 import java.util.Arrays;
 
-import org.w3c.dom.Text;
+
 
 public class practical
 {
