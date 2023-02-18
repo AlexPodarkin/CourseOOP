@@ -17,7 +17,7 @@ public class Human implements Serializable
     public Human() 
     {
         this.alive = true;
-        this.name = "Очередняра";
+        this.name = "Иван";
         this.sex = "муж";
         this.age = 18;
     }
