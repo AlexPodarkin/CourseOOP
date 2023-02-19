@@ -2,111 +2,105 @@ package HomeWork2;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class Human implements Serializable 
 {
-    private boolean alive;
     private String name;
     private String sex;
     private int age;
-    private ArrayList<Human> children = new ArrayList<>();
-    private Human[] parents = new Human[2];
-    private static final long serialVersionUID = 1L;
+    private Human mather;
+    private Human father;
+    private List<Human> children;
 
-    public Human() 
+    public Human(String name, String sex, int age) 
     {
-        this.alive = true;
-        this.name = "Иван";
-        this.sex = "муж";
-        this.age = 18;
-    }
-
-    public Human(boolean alive, String name, String sex, int age) 
-    {
-        this.alive = alive;
         this.name = name;
         this.sex = sex;
         this.age = age;
+        children = new ArrayList<>();
     }
 
-    // Геттеры
-    public boolean isAlive() 
+
+
+    public Human(String name, String sex, int age, Human mather, Human father) 
     {
-        return alive;
+        this(name, sex, age);
+        this.mather = mather;
+        this.father = father;
     }
+
+
+    
+    public void addChild(Human child)
+    {
+        this.children.add(child);
+        if(this.sex == "муж.")
+        {
+            child.father = this;
+        }
+        else child.mather = this;
+    }
+
+    public String printChildren() 
+    {
+        String res = " Дети: ";     
+        if (!this.children.isEmpty())
+        {
+            for (int i = 0; i < children.size(); i++) 
+            {
+                res += children.get(i).name + ",";
+            }
+        }
+        else res += " нет";
+        return res;
+    }
+
+    @Override
+    public String toString() 
+    {
+        String res = "Имя: " + name +  ", Пол: " + sex + ", Возраст: " + age;
+        if (this.mather != null)
+        {
+            res += ", Мать: " + mather.name;
+        }
+        else res += ", Мать: неизвестна";
+        
+        if (this.father != null)
+        {
+            res += ", Отец: " + father.name;
+        }
+        else res += ", Отец: неизвестен,";
+
+        res += printChildren();
+        
+        return res;
+        
+    }
+
 
     public String getName() 
     {
         return name;
     }
 
-    public String getSex() 
+    public Human getFather() 
     {
-        return sex;
+        return father;
     }
 
-    public int getAge() 
+    public Human getMather() 
     {
-        return age;
+        return mather;
     }
-
-    // public void - реализовать логику getChildren при отсутствии детей
-
-    public ArrayList<Human> getChildren() 
-    {
-        return children;
-    }
-
-    public Human[] getParents() 
-    {
-        return parents;
-    }
-
-    // Сеттеры
-    public void setAlive(boolean alive) 
-    {
-        this.alive = alive;
-    }
-
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
-
-    public void setSex(String sex) 
-    {
-        this.sex = sex;
-    }
-
     public void setAge(int age) 
     {
         this.age = age;
     }
 
-    public void setChildren(ArrayList<Human> children) 
+    public void saveObj(IO save)
     {
-        this.children = children;
+        save = new IO();
+        save.save("FreeFamily.data", this);
     }
-
-    public void setParents(Human[] parents) 
-    {
-        this.parents = parents;
-    }
-
-    @Override
-    public String toString() 
-    {
-        if (alive) 
-        {
-            return "Человек" + ", Имя " + name + ", пол " + sex + ", возраст " + age + " лет, дети=" + children
-                    + ", родители=" + Arrays.toString(parents);
-        } 
-        else 
-        {
-            return "Человек умер" + ", звали " + name + ", пол " + sex + ", в возрасте " + age + " лет, дети=" + children
-            + ", родители=" + Arrays.toString(parents);
-        }
-    }
-
 }

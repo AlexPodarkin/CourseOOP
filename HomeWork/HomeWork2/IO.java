@@ -14,10 +14,10 @@ public class IO implements LoadFrom, SaveAs
     public Serializable load(String path)
     {
         Serializable personRestored = null;
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(
-                new FileInputStream(path))) 
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(path))) 
         {
             personRestored = (Serializable) objectInputStream.readObject();
+            System.out.println("Загрузка данных: успех !");
         } 
         catch (Exception e) 
         {
@@ -30,15 +30,18 @@ public class IO implements LoadFrom, SaveAs
 
     // Сохранение данных в файл
     @Override
-    public void save(String path, Serializable obj) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-                new FileOutputStream(path))) 
+    public void save(String path, Serializable obj) 
+    {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path))) 
         {
             objectOutputStream.writeObject(obj);
-        } catch (Exception e) 
+            System.err.println("Данные успешно сохранены !");
+        } 
+        catch (Exception e) 
         {
             e.getMessage();
             e.printStackTrace();
         }
     }
 }
+
