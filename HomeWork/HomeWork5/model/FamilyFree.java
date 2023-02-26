@@ -1,21 +1,21 @@
-package HomeWork3;
+package HomeWork5.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import HomeWork3.comporator.HumanIterator; // 
 
-public class FamilyFree implements Serializable,Iterable<Human> //
+import HomeWork5.model.comporator.NimaleIterator; 
+
+public class FamilyFree<T extends Nimale> implements Iterable<T> 
 {
-    private static List<Human> familyFree;
+    private List<T> familyFree;
     
     public FamilyFree() 
     {
         familyFree = new ArrayList<>();
     }
     
-    public static void addFamilyFree(Human human)
+    public void addFamilyFree(T human)
     {
         if (!familyFree.contains(human))
         {
@@ -34,7 +34,7 @@ public class FamilyFree implements Serializable,Iterable<Human> //
     @Override
     public String toString() 
     {
-        String res = "В семье " + familyFree.size() + " человек:\n";
+        String res = "В семье " + familyFree.size() + " человек(а):\n";
         for (int i = 0; i < familyFree.size(); i++) 
         {
             res += (i+1) + ") " + familyFree.get(i).toString() + "\n";
@@ -42,9 +42,9 @@ public class FamilyFree implements Serializable,Iterable<Human> //
         return res;
     }
 
-    public Human getByName(String nameHuman)
+    public T getByName(String nameHuman)
     {
-        for (Human human: familyFree)
+        for (T human: familyFree)
         {
             if (human.getName().equalsIgnoreCase(nameHuman))
             {
@@ -54,16 +54,16 @@ public class FamilyFree implements Serializable,Iterable<Human> //
         return null;
     }
 
-    public static List<Human> getFamilyFree() 
+    public List<T> getFamilyFree() 
     {
         return familyFree;
     }
 
     @Override
-    public Iterator<Human> iterator() 
+    public Iterator<T> iterator() 
     {
-        return new HumanIterator(familyFree);
-        //return familyFree.iterator();         // вариант реализации без класса :)
+        return new NimaleIterator<T>(familyFree);
+        //return familyFree.iterator();            // простой способ достать итератор
     }
 
 }
